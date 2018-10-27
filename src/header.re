@@ -13,7 +13,14 @@ module Styles = {
     height(vh(15.)),
     alignItems(center),
     fontSize(Calc.(+)(px(12), vmin(2.))),
-    color(white)
+    color(white),
+    boxShadow(
+      ~x=px(0),
+      ~y=px(1),
+      ~blur=px(4),
+      ~spread=px(0),
+      rgba(0, 21, 41, 0.8)
+    )
   ]);
 
   let headerLogo = style([
