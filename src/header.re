@@ -34,6 +34,6 @@ let make = (~message, _children) => {
     <div className=Styles.header>
       <img className=Styles.headerLogo src=logo/>
       <h2>(ReasonReact.string(message))</h2>
-      <input className="header-search-box"></input>
+      <input className=Styles.headerSearchBox />
     </div>,
 };
