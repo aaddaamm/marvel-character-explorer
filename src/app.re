@@ -1,5 +1,3 @@
-[%bs.raw {|require('./app.css')|}];
-
 let component = ReasonReact.statelessComponent("App");
 
 module Styles = {
