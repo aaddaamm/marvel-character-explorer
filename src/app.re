@@ -6,10 +6,12 @@ module Styles = {
   let app = style([
     display(flexBox),
     flexDirection(column),
+    minHeight(vh(100.)),
   ]);
 
   let appContent = style([
     padding(px(15)),
+    flex(1)
   ]);
 };
 
@@ -21,5 +23,6 @@ let make = (~message, _children) => {
       <div className=Styles.appContent>
         (ReasonReact.string("content"))
       </div>
+      <Footer />
     </div>,
 };
