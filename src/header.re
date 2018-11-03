@@ -21,18 +21,23 @@ module Styles = {
       ~blur=px(4),
       ~spread=px(0),
       rgba(0, 21, 41, 0.8)
-    )
+    ),
   ]);
 
   let headerLogo = style([
     display(flexBox),
     marginLeft(px(15)),
-    height(px(60))
+    height(px(60)),
   ]);
 
-  let headerSearchBox = style([
+  let headerSearch = style([
     display(flexBox),
     marginRight(px(15)),
+  ]);
+
+  let headerSearchButton = style([
+    display(flexBox),
+    marginTop(px(1)),
   ]);
 };
 
@@ -42,6 +47,9 @@ let make = (~message, _children) => {
     <div className=Styles.header>
       <img className=Styles.headerLogo src=logo/>
       <h2>(ReasonReact.string(message))</h2>
-      <input className=Styles.headerSearchBox />
+      <div className=Styles.headerSearch>
+        <input type_="search" placeholder="Search this site" />
+        <button className=Styles.headerSearchButton>(ReasonReact.string("Search"))</button>
+      </div>
     </div>,
 };
