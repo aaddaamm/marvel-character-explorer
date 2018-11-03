@@ -10,10 +10,11 @@ module Styles = {
     flexDirection(row),
     justifyContent(spaceBetween),
     backgroundColor(hex("282c34")),
-    height(vh(15.)),
+    height(vh(10.)),
     alignItems(center),
     fontSize(Calc.(+)(px(12), vmin(2.))),
     color(white),
+    minHeight(px(100)),
     boxShadow(
       ~x=px(0),
       ~y=px(1),
