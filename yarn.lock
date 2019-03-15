@@ -1916,9 +1916,9 @@ bs-loader@^2.0.3:
     read-bsconfig "^1.0.1"
 
 bs-platform@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-4.0.6.tgz#e7f156c77ad3efafb0c0291b41dcf1b06f93c192"
-  integrity sha512-TrNzQFoV6opBYdUgcRdgQQ5f6JnKgotPFZORIjuHPtRlYgv37P6xVBTGfA4NlMCkHXHcPrL6JI63GyAcfq+qpg==
+  version "4.0.18"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-4.0.18.tgz#d17b8693ba1f714d9b27e0ddb365f2069ba4b8a0"
+  integrity sha512-BwzW0iYHvREqUZIgQxJmdJrxexppLvJxYQ4LLexbhCp7uZU5DIZ5ub4ZHpkCkc8fn8bsXWc+Rrejb3csi+BoAQ==
 
 bsb-js@^1.0.0:
   version "1.1.7"
