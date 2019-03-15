@@ -1,6 +1,5 @@
 type state = {
   count: int,
-  show: bool,
   pendingMessage: string,
   textMessage: string,
 };
@@ -8,8 +7,7 @@ type state = {
 type action =
   | Click
   | UpdatePendingMessage(string)
-  | UpdateMessage
-  | Toggle;
+  | UpdateMessage;
 
 let component = ReasonReact.reducerComponent("App");
 
@@ -34,13 +32,12 @@ module Styles = {
 
 let make = (~message, _children) => {
   ...component,
-  initialState: () => { count: 0, show: true, pendingMessage: "", textMessage: "Hello" },
+  initialState: () => { count: 0, pendingMessage: "", textMessage: "Hello" },
   reducer: (action, state) =>
     switch(action) {
       | Click => ReasonReact.Update({ ...state, count: state.count + 1 })
       | UpdatePendingMessage(text) => ReasonReact.Update({ ...state, pendingMessage: text})
       | UpdateMessage => ReasonReact.Update({ ...state, textMessage: state.pendingMessage, pendingMessage: ""})
-      | Toggle => ReasonReact.Update({ ...state, show: !state.show })
     },
   render: self => {
     let count = string_of_int(self.state.count);
@@ -53,27 +50,7 @@ let make = (~message, _children) => {
         <button className=Styles.button onClick={_event => self.send(Click)}>
           (ReasonReact.string("button"))
         </button>
-        <button className=Styles.button onClick={_event => self.send(Toggle)}>
-          (ReasonReact.string("party switch"))
-        </button>
-        (
-          self.state.show
-            ? (
-              <h1>(ReasonReact.string("PARTY TIME!"))</h1>
-            ) : (
-              ReasonReact.null
-            )
-        )
-        <div>
-          (ReasonReact.string(self.state.textMessage))
-        </div>
-        <div>
-          <input
-            value={self.state.pendingMessage}
-            onChange={event => self.send(UpdatePendingMessage(ReactEvent.Form.target(event)##value))} />
-          <button onClick={_event => self.send(UpdateMessage)}>
-            (ReasonReact.string("Update message"))
-          </button>
+        <PartyTime />
         </div>
       </div>
       <Footer />
