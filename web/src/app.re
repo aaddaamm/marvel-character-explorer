@@ -1,4 +1,5 @@
 type route =
+  | Home
   | ClickerCounter
   | PartyTime
   | MessageUpdater;
@@ -37,11 +38,11 @@ module Styles = {
 
 let mapUrlToRoute = (url: ReasonReact.Router.url) =>
   switch url.path {
-    | [] => ClickerCounter
+    | [] => Home
     | ["clicker-counter"] => ClickerCounter
     | ["party-time"] => PartyTime
     | ["message-updater"] => MessageUpdater
-    | _ => ClickerCounter
+    | _ => Home
   };
 
 let make = (~message, _children) => {
@@ -70,6 +71,7 @@ let make = (~message, _children) => {
       <div className=Styles.appContent>
         (
           switch self.state.route {
+            | Home => <Home />
             | ClickerCounter => <ClickerCounter />
             | PartyTime => <PartyTime />
             | MessageUpdater => <MessageUpdater />
