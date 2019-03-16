@@ -30,7 +30,8 @@ module Styles = {
     display(flexBox),
     flexDirection(row),
     justifyContent(spaceEvenly),
-    marginTop(px(15)),
+    paddingTop(px(15)),
+    paddingBottom(px(15)),
   ]);
 };
 
