@@ -45,7 +45,9 @@ let make = (~message, _children) => {
   ...component,
   render: _self =>
     <div className=Styles.header>
-      <img className=Styles.headerLogo src=logo/>
+      <Link href="/">
+        <img className=Styles.headerLogo src=logo/>
+      </Link>
       <h2>(ReasonReact.string(message))</h2>
       <div className=Styles.headerSearch>
         <input type_="search" placeholder="Search this site" />
