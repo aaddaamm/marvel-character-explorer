@@ -16,6 +16,17 @@ const getUsers = (req, res) => {
   res.status(200).send(users);
 }
 
+const getUser = (req, res) => {
+  res.status(200).send({
+    id: 1,
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    username: faker.internet.userName(),
+    email: faker.internet.email()
+  });
+}
+
 module.exports = {
   getUsers,
+  getUser
 };
