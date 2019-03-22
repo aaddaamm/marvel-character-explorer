@@ -1,4 +1,4 @@
-[@bs.module] external logo : string = "./MarvelLogo.svg";
+[@bs.module] external logo : string = "../assets/MarvelLogo.svg";
 
 let component = ReasonReact.statelessComponent("Header");
 
