@@ -62,11 +62,12 @@ let make = (_children) => {
         <div>
           (users
             |> List.map((user: Types.user) => {
+              let { firstName, lastName, username, email }: Types.user  = user;
               <div className=Styles.userItem key=(string_of_int(user.id))>
-                <div>(str({j|First Name: user.firstName|j}))</div>
-                <div>(str(user.lastName))</div>
-                <div>(str(user.username))</div>
-                <div>(str(user.email))</div>
+                <div>(str({j|First Name: $(firstName)|j}))</div>
+                <div>(str({j|Last Name: $(lastName)|j}))</div>
+                <div>(str({j|User Name: $(username)|j}))</div>
+                <div>(str({j|Email: $(email)|j}))</div>
               </div>
             })
             |> Array.of_list
