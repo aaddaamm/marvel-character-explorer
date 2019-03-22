@@ -1,7 +1,8 @@
-var router = function (app) {
-  app.get("/", function(req, res) {
-    res.status(200).send("Welcome to our restful API");
-  });
+const usersController = require("../controllers/usersController");
+
+const router = function (app) {
+  app.get("/users", usersController.getUsers);
+  app.get("/user", usersController.getUser);
 }
 
 module.exports = router;
