@@ -16,6 +16,8 @@
 *.bs.js
 
 # misc
+/dist
+/.cache
 .DS_Store
 .env
 .env.development
