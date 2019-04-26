@@ -37,7 +37,7 @@ module Styles = {
   ]);
 };
 
-let mapUrlToRoute = (url: ReasonReact.Router.url) =>
+let mapUrlToRoute = (url: ReasonReactRouter.url) =>
   switch url.path {
     | [] => Home
     | ["clicker-counter"] => ClickerCounter
@@ -52,11 +52,11 @@ let make = (~message, _children) => {
   initialState: () => { route: ClickerCounter },
   didMount: (self) => {
     let watcherID =
-      ReasonReact.Router.watchUrl(url =>
+      ReasonReactRouter.watchUrl(url =>
         self.send(ChangeRoute(url |> mapUrlToRoute))
       );
 
-    self.onUnmount(() => ReasonReact.Router.unwatchUrl(watcherID));
+    self.onUnmount(() => ReasonReactRouter.unwatchUrl(watcherID));
   },
   reducer: (action, _state) =>
     switch action {

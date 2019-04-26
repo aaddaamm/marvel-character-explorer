@@ -16,6 +16,6 @@
     "bs-css": "^8.0.3",
     "bs-fetch": "^0.3.1",
     "bs-platform": "^5.0.0",
-    "reason-react": "^0.6.0"
+    "reason-react": "^0.7.0"
   }
 }
