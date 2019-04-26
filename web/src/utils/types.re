@@ -2,7 +2,7 @@
 type summaryItem = {
   resourceURI: option(string),
   name: option(string),
-  [@bs.as "type"] type_: option(string),
+  type_: option(string),
   role: option(string)
 };
 
@@ -14,7 +14,7 @@ type listItem = {
 };
 
 type urlItem = {
-  [@bs.as "type"] type_: option(string),
+  type_: option(string),
   url: option(string)
 };
 
@@ -24,18 +24,18 @@ type imageItem = {
 };
 
 type textItem = {
-  [@bs.as "type"] type_: option(string),
+  type_: option(string),
   language: option(string),
   text: option(string)
 };
 
 type dateItem = {
-  [@bs.as "type"] type_: option(string),
+  type_: option(string),
   date: option(Js.Date.t)
 };
 
 type priceItem = {
-  [@bs.as "type"] type_: option(string),
+  type_: option(string),
   price: option(float),
 };
 
@@ -89,6 +89,23 @@ type comic = {
   characters: option(listItem),
   stories: option(listItem),
   events: option(listItem),
+};
+
+type dataContainer = {
+   offset: int,
+   limit: int,
+   total: int,
+   count: int,
+};
+
+type responseWrapper = {
+  code: int,
+  status: string,
+  copyright: string,
+  attributionText: string,
+  attributionHTML: string,
+  etag: string,
+  data: dataContainer,
 };
 
 type user = {

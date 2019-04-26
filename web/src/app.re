@@ -3,7 +3,8 @@ type route =
   | ClickerCounter
   | PartyTime
   | MessageUpdater
-  | ListUsers;
+  | ListUsers
+  | ListCharacters;
 
 type state = {
   route: route,
@@ -44,6 +45,7 @@ let mapUrlToRoute = (url: ReasonReactRouter.url) =>
     | ["party-time"] => PartyTime
     | ["message-updater"] => MessageUpdater
     | ["list-users"] => ListUsers
+    | ["list-characters"] => ListCharacters
     | _ => Home
   };
 
@@ -70,6 +72,7 @@ let make = (~message, _children) => {
         <Link href="/party-time">(ReasonReact.string("Party Time"))</Link>
         <Link href="/message-updater">(ReasonReact.string("Message Updater"))</Link>
         <Link href="/list-users">(ReasonReact.string("List Users"))</Link>
+        <Link href="/list-characters">(ReasonReact.string("List Characters"))</Link>
       </div>
       <div className=Styles.appContent>
         (
@@ -79,6 +82,7 @@ let make = (~message, _children) => {
             | PartyTime => <PartyTime />
             | MessageUpdater => <MessageUpdater />
             | ListUsers => <ListUsers />
+            | ListCharacters => <ListCharacters />
           }
         )
       </div>
