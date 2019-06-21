@@ -13,11 +13,14 @@ module Styles = {
   ]);
 };
 
+let date = Js.Date.make();
+let year = Js.Date.getFullYear(date);
+
 let make = (_children) => {
   ...component,
   render: _self =>
     <div className=Styles.footer>
-      (ReasonReact.string({j|Data provided by Marvel. \u00a9 2014 Marvel|j}))
+      <a href={"http://marvel.com"}>(ReasonReact.string({j|Data provided by Marvel. \u00a9 $(year) Marvel|j}))</a>
     </div>
 };
 
