@@ -12,6 +12,17 @@ type action =
 
 let listCharacters = ReasonReact.reducerComponent("ListCharacters");
 
+module Styles = {
+  open Css;
+
+  let characterItem = style([
+    margin2(
+      ~h=px(10),
+      ~v=px(5)
+    ),
+  ]);
+};
+
 let make = (_children) => {
   ...listCharacters,
   initialState: () => Loading,
@@ -60,6 +71,22 @@ let make = (_children) => {
           <div> (str(string_of_int(response.data.limit))) </div>
           <div> (str(string_of_int(response.data.total))) </div>
           <div> (str(string_of_int(response.data.count))) </div>
+        </div>
+        <div>
+        <h2> (str("Characters")) </h2>
+          (response.data.results
+            |> List.map(result => {
+              let { id, name, modified, resourceURI, description }: Types.characterResult = result;
+              <div className=Styles.characterItem key=(string_of_int(id))>
+                <div>(str({j|Character Name: $(name)|j}))</div>
+                <div>(str({j|Character Description: $(description)|j}))</div>
+                <a href={resourceURI}>(str("link"))</a>
+                <div>(str({j|last modified: $(modified)|j}))</div>
+              </div>
+            })
+            |> Array.of_list
+            |> ReasonReact.array
+          )
         </div>
       </div>
     },

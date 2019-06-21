@@ -91,11 +91,20 @@ type comic = {
   events: option(listItem),
 };
 
+type characterResult = {
+  name: string,
+  id: int,
+  modified: string,
+  resourceURI: string,
+  description: string,
+};
+
 type dataContainer = {
    offset: int,
    limit: int,
    total: int,
    count: int,
+   results: list(characterResult),
 };
 
 type responseWrapper = {

@@ -1,9 +1,7 @@
-[@bs.val] external baseUrl : string = "process.env.REACT_APP_API_ORIGIN";
-[@bs.val] external apiKey : string = "process.env.REACT_APP_API_KEY";
+[@bs.val] external marvelBaseUrl : string = "process.env.MARVEL_API_ORIGIN";
+[@bs.val] external apiKey : string = "process.env.MARVEL_API_KEY";
 
 let expressOrigin = "http://localhost:5001";
-let marvelOrigin = "https://gateway.marvel.com/v1/public";
-
 
 module Decoders = {
   let user = user: Types.user =>
@@ -17,12 +15,22 @@ module Decoders = {
 
   let users = json : list(Types.user) => Json.Decode.list(user, json);
 
+  let result = result: Types.characterResult =>
+    Json.Decode.{
+      id: result |> field("id", int),
+      name: result |> field("name", string),
+      modified: result |> field("modified", string),
+      resourceURI: result |> field("resourceURI", string),
+      description: result |> field("description", string),
+    };
+
   let dataContainer = data: Types.dataContainer =>
     Json.Decode.{
       offset: data |> field("offset", int),
       limit: data |> field("limit", int),
       total: data |> field("total", int),
-      count: data |> field("count", int)
+      count: data |> field("count", int),
+      results: data |> field("results", list(result))
     };
 
   let response = response: Types.responseWrapper =>
@@ -48,7 +56,7 @@ let fetchUsers = () => Js.Promise.(
 
 let fetchCharacters = () => Js.Promise.(
   Fetch.fetchWithInit(
-    {j|$(marvelOrigin)/characters?apikey=54ad35742989cb9270c1a61a9bcf9ca2|j},
+    {j|$(marvelBaseUrl)/characters?apikey=$(apiKey)|j},
     Fetch.RequestInit.make(
       ~method_=Get,
       ~headers=Fetch.HeadersInit.make({ "Accept": "application/json" }),
@@ -57,8 +65,10 @@ let fetchCharacters = () => Js.Promise.(
     )
   )
   |> then_(Fetch.Response.json)
-  |> then_(json =>
+  |> then_(json => {
+     Js.log(json);
     json |> Decoders.response |> (response => Some(response) |> resolve)
+  }
   )
   |> catch(_err => resolve(None))
 );
