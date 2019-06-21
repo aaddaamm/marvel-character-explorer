@@ -10,7 +10,6 @@ type action =
   | LoadedUsers(list(Types.user))
   | LoadUsersFailed;
 
-
 let listUsers = ReasonReact.reducerComponent("ListUsers");
 
 module Styles = {
@@ -62,7 +61,7 @@ let make = (_children) => {
         <div>
           (users
             |> List.map(user => {
-              let { id, firstName, lastName, username, email }: Types.user  = user;
+              let { id, firstName, lastName, username, email }: Types.user = user;
               <div className=Styles.userItem key=(string_of_int(id))>
                 <div>(str({j|First Name: $(firstName)|j}))</div>
                 <div>(str({j|Last Name: $(lastName)|j}))</div>
