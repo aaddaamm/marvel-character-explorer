@@ -3,7 +3,7 @@
 
 let expressOrigin = "http://localhost:5001";
 
-module Decoders = {
+module MarvelDecoders = {
   let user = user: Types.user =>
     Json.Decode.{
       id: user |> field("id", int),
@@ -15,13 +15,20 @@ module Decoders = {
 
   let users = json : list(Types.user) => Json.Decode.list(user, json);
 
-  let result = result: Types.characterResult =>
+  let thumbnail = data: Types.imageItem =>
+    Json.Decode.{
+      path: data |> field("path", string),
+      extension: data |> field("extension", string),
+    };
+
+  let character = result: Types.characterResult =>
     Json.Decode.{
       id: result |> field("id", int),
       name: result |> field("name", string),
       modified: result |> field("modified", string),
       resourceURI: result |> field("resourceURI", string),
       description: result |> field("description", string),
+      thumbnail: result |> field("thumbnail", thumbnail)
     };
 
   let dataContainer = data: Types.dataContainer =>
@@ -30,7 +37,7 @@ module Decoders = {
       limit: data |> field("limit", int),
       total: data |> field("total", int),
       count: data |> field("count", int),
-      results: data |> field("results", list(result))
+      results: data |> field("results", list(character))
     };
 
   let response = response: Types.responseWrapper =>
@@ -45,11 +52,26 @@ module Decoders = {
     };
 };
 
+module ISSDecoders = {
+  let position = position: Types.position =>
+    Json.Decode.{
+      latitude: position |> field("latitude", string),
+      longitude: position |> field("longitude", string),
+    };
+
+  let positionResponse = response: Types.issPosition =>
+    Json.Decode.{
+      message: response |> field("message", string),
+      timestamp: response |> field("timestamp", int),
+      iss_position: response |> field("iss_position", position)
+    };
+};
+
 let fetchUsers = () => Js.Promise.(
   Fetch.fetch({j|$(expressOrigin)/users|j})
   |> then_(Fetch.Response.json)
   |> then_(json =>
-    json |> Decoders.users |> (users => Some(users) |> resolve)
+    json |> MarvelDecoders.users |> (users => Some(users) |> resolve)
   )
   |> catch(_err => resolve(None))
 );
@@ -67,7 +89,18 @@ let fetchCharacters = () => Js.Promise.(
   |> then_(Fetch.Response.json)
   |> then_(json => {
      Js.log(json);
-    json |> Decoders.response |> (response => Some(response) |> resolve)
+    json |> MarvelDecoders.response |> (response => Some(response) |> resolve)
+  }
+  )
+  |> catch(_err => resolve(None))
+);
+
+let fetchIssLocation = () => Js.Promise.(
+  Fetch.fetch("http://api.open-notify.org/iss-now.json")
+  |> then_(Fetch.Response.json)
+  |> then_(json => {
+     Js.log(json);
+    json |> ISSDecoders.positionResponse |> (response => Some(response) |> resolve)
   }
   )
   |> catch(_err => resolve(None))
