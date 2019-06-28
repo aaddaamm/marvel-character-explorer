@@ -19,8 +19,8 @@ type urlItem = {
 };
 
 type imageItem = {
-  path: option(string),
-  extension: option(string)
+  path: string,
+  extension: string,
 };
 
 type textItem = {
@@ -97,6 +97,7 @@ type characterResult = {
   modified: string,
   resourceURI: string,
   description: string,
+  thumbnail: imageItem,
 };
 
 type dataContainer = {
