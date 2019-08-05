@@ -15,6 +15,12 @@ module MarvelDecoders = {
 
   let users = json : list(Types.user) => Json.Decode.list(user, json);
 
+  let characterUrl = data: Types.urlItem =>
+    Json.Decode.{
+      type_: data |> field("type", string),
+      path: data |> field("url", string),
+    };
+
   let thumbnail = data: Types.imageItem =>
     Json.Decode.{
       path: data |> field("path", string),
@@ -28,7 +34,8 @@ module MarvelDecoders = {
       modified: result |> field("modified", string),
       resourceURI: result |> field("resourceURI", string),
       description: result |> field("description", string),
-      thumbnail: result |> field("thumbnail", thumbnail)
+      thumbnail: result |> field("thumbnail", thumbnail),
+      urls: result |> field("urls", list(characterUrl))
     };
 
   let dataContainer = data: Types.dataContainer =>

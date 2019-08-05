@@ -15,11 +15,30 @@ let listCharacters = ReasonReact.reducerComponent("ListCharacters");
 module Styles = {
   open Css;
 
-  let characterItem = style([
+  let characterItemRow = style([
+    display(flexBox),
+    flexDirection(row),
     margin2(
       ~h=px(10),
       ~v=px(5)
     ),
+  ]);
+
+  let characterItemRowDetails = style([
+    marginLeft(px(15)),
+  ]);
+
+  let characterLink = style([
+    marginRight(px(5)),
+  ]);
+
+  let characterListControls = style([
+    display(flexBox),
+    flexDirection(row),
+  ]);
+
+  let nextButton = style([
+    marginLeft(px(5)),
   ]);
 };
 
@@ -57,32 +76,47 @@ let make = (_children) => {
         (switch (self.state) {
         | Loading => <div> (str("Loading...")) </div>
         | Failure => <div> (str("could not load characters")) </div>
-        | Success(response) =>
+        | Success(response) => {
+          let { data: { count, total, offset } }: Types.responseWrapper = response;
           <div>
-            <div>
-              <h3>(str("Data Container"))</h3>
-              <div> (str(string_of_int(response.data.offset))) </div>
-              <div> (str(string_of_int(response.data.limit))) </div>
-              <div> (str(string_of_int(response.data.total))) </div>
-              <div> (str(string_of_int(response.data.count))) </div>
-            </div>
             (response.data.results
               |> List.map(result => {
-                let { id, name, modified, resourceURI, description, thumbnail: { path, extension } }: Types.characterResult = result;
+                let { id, name, description, urls, thumbnail: { path, extension } }: Types.characterResult = result;
                 // image documentation here
                 // https://developer.marvel.com/documentation/images
-                <div className=Styles.characterItem key=(string_of_int(id))>
-                  <img src={{j|$(path)/standard_medium.$(extension)|j}} alt={name} />
-                  <div>(str({j|Character Name: $(name)|j}))</div>
-                  <div>(str({j|Character Description: $(description)|j}))</div>
-                  <a href={resourceURI}>(str("link"))</a>
-                  <div>(str({j|last modified: $(modified)|j}))</div>
+                <div className=Styles.characterItemRow key=(string_of_int(id))>
+                  <img src={{j|$(path)/standard_large.$(extension)|j}} alt={name} />
+                  <div className=Styles.characterItemRowDetails>
+                    <div>(str({j|Character Name: $(name)|j}))</div>
+                    <div>(str({j|Character Description: $(description)|j}))</div>
+                    (urls
+                      |> List.map(url => {
+                        let { type_, path }: Types.urlItem = url;
+                        <a key={string_of_int(Random.int(100000))} className=Styles.characterLink target="_blank" href={path}>
+                          (switch (type_) {
+                            | "detail" => str("Details")
+                            | "wiki" => str("Wiki")
+                            | "comiclink" => str("Comics")
+                            | _ => ReasonReact.null
+                          })
+                        </a>
+                      })
+                      |> Array.of_list
+                      |> ReasonReact.array
+                    )
+                  </div>
                 </div>
               })
               |> Array.of_list
               |> ReasonReact.array
             )
+            <div className=Styles.characterListControls>
+              (offset > 0 ? <button>(str("previous"))</button> : ReasonReact.null)
+              <div>(str({j|$(count) of $(total)|j}))</div>
+              <button className=Styles.nextButton>(str("next"))</button>
+            </div>
           </div>
+        }
         })
       </div>,
 };

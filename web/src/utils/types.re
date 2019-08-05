@@ -14,8 +14,8 @@ type listItem = {
 };
 
 type urlItem = {
-  type_: option(string),
-  url: option(string)
+  type_: string,
+  path: string
 };
 
 type imageItem = {
@@ -98,6 +98,7 @@ type characterResult = {
   resourceURI: string,
   description: string,
   thumbnail: imageItem,
+  urls: list(urlItem),
 };
 
 type dataContainer = {
