@@ -77,11 +77,11 @@ let make = (_children) => {
         | Loading => <div> (str("Loading...")) </div>
         | Failure => <div> (str("could not load characters")) </div>
         | Success(response) => {
-          let { data: { count, total, offset } }: Types.responseWrapper = response;
+          let { data: { count, total, offset, results: characters } }: Types.responseWrapper = response;
           <div>
-            (response.data.results
-              |> List.map(result => {
-                let { id, name, description, urls, thumbnail: { path, extension } }: Types.characterResult = result;
+            (characters
+              |> List.map(character => {
+                let { id, name, description, urls, thumbnail: { path, extension } }: Types.characterResult = character;
                 // image documentation here
                 // https://developer.marvel.com/documentation/images
                 <div className=Styles.characterItemRow key=(string_of_int(id))>
