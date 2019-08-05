@@ -3,7 +3,7 @@
 
 let expressOrigin = "http://localhost:5001";
 
-module MarvelDecoders = {
+module UserDecoders = {
   let user = user: Types.user =>
     Json.Decode.{
       id: user |> field("id", int),
@@ -14,7 +14,9 @@ module MarvelDecoders = {
     };
 
   let users = json : list(Types.user) => Json.Decode.list(user, json);
+};
 
+module MarvelDecoders = {
   let characterUrl = data: Types.urlItem =>
     Json.Decode.{
       type_: data |> field("type", string),
@@ -59,26 +61,11 @@ module MarvelDecoders = {
     };
 };
 
-module ISSDecoders = {
-  let position = position: Types.position =>
-    Json.Decode.{
-      latitude: position |> field("latitude", string),
-      longitude: position |> field("longitude", string),
-    };
-
-  let positionResponse = response: Types.issPosition =>
-    Json.Decode.{
-      message: response |> field("message", string),
-      timestamp: response |> field("timestamp", int),
-      iss_position: response |> field("iss_position", position)
-    };
-};
-
 let fetchUsers = () => Js.Promise.(
   Fetch.fetch({j|$(expressOrigin)/users|j})
   |> then_(Fetch.Response.json)
   |> then_(json =>
-    json |> MarvelDecoders.users |> (users => Some(users) |> resolve)
+    json |> UserDecoders.users |> (users => Some(users) |> resolve)
   )
   |> catch(_err => resolve(None))
 );
