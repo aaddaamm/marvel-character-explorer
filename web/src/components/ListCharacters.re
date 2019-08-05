@@ -87,8 +87,8 @@ let make = (_children) => {
                 <div className=Styles.characterItemRow key=(string_of_int(id))>
                   <img src={{j|$(path)/standard_large.$(extension)|j}} alt={name} />
                   <div className=Styles.characterItemRowDetails>
-                    <div>(str({j|Character Name: $(name)|j}))</div>
-                    <div>(str({j|Character Description: $(description)|j}))</div>
+                    <h3>(str({j|Character Name: $(name)|j}))</h3>
+                    <h4>(str("Character Description: "))(String.length(description) > 0 ? str(description) : str("N/A"))</h4>
                     (urls
                       |> List.map(url => {
                         let { type_, path }: Types.urlItem = url;
