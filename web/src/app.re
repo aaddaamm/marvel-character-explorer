@@ -26,7 +26,7 @@ module Styles = {
 
   let appContent = style([
     padding(px(15)),
-    flex(1),
+    flex(auto),
   ]);
 
   let navigation = style([
