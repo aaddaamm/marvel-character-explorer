@@ -3,7 +3,6 @@
 
 let expressOrigin = "http://localhost:5001";
 
-
 let fetchUsers = () => Js.Promise.(
   Fetch.fetch({j|$(expressOrigin)/users|j})
   |> then_(Fetch.Response.json)
