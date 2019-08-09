@@ -6,7 +6,7 @@ type state =
   | Success(Types.responseWrapper);
 
 type action =
-  | LoadCharacters
+  | LoadCharacters(int)
   | LoadedCharacters(Types.responseWrapper)
   | LoadCharactersFailed;
 
@@ -46,17 +46,17 @@ let make = (_children) => {
   ...listCharacters,
   initialState: () => Loading,
   didMount: self => {
-    self.send(LoadCharacters);
+    self.send(LoadCharacters(0));
   },
   reducer: (action, _state) =>
     switch (action) {
-    | LoadCharacters =>
+    | LoadCharacters(offset) =>
       ReasonReact.UpdateWithSideEffects(
         Loading,
         (
           self =>
             Js.Promise.(
-              Api.fetchCharacters()
+              Api.fetchCharacters(~offset=offset, ())
               |> then_(result =>
                    switch (result) {
                    | Some(response) => resolve(self.send(LoadedCharacters(response)))
@@ -92,7 +92,7 @@ let make = (_children) => {
                     (urls
                       |> List.map(url => {
                         let { type_, path }: Types.urlItem = url;
-                        <a key={string_of_int(Random.int(100000))} className=Styles.characterLink target="_blank" href={path}>
+                        <a key={string_of_int(id) ++ type_} className=Styles.characterLink target="_blank" href={path}>
                           (switch (type_) {
                             | "detail" => str("Details")
                             | "wiki" => str("Wiki")
@@ -111,9 +111,17 @@ let make = (_children) => {
               |> ReasonReact.array
             )
             <div className=Styles.characterListControls>
-              (offset > 0 ? <button>(str("previous"))</button> : ReasonReact.null)
+              (offset > 0 ?
+                <button onClick={_event => self.send(LoadCharacters(offset - count))}>(str("previous"))</button>
+                :
+                ReasonReact.null
+              )
               <div>(str({j|$(count) of $(total)|j}))</div>
-              <button className=Styles.nextButton>(str("next"))</button>
+              <button
+                className=Styles.nextButton
+                onClick={_event => self.send(LoadCharacters(offset + count))}>
+                (str("next"))
+              </button>
             </div>
           </div>
         }
