@@ -14,7 +14,7 @@ let fetchUsers = () => Js.Promise.(
 
 let fetchCharacters = (~offset=0, ()) => Js.Promise.(
   Fetch.fetchWithInit(
-    {j|$(marvelBaseUrl)/characters?apikey=$(apiKey)&offset=$(offset)|j},
+    {j|$(marvelBaseUrl)/characters?apikey=$apiKey&offset=$offset|j},
     Fetch.RequestInit.make(
       ~method_=Get,
       ~headers=Fetch.HeadersInit.make({ "Accept": "application/json" }),

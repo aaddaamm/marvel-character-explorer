@@ -20,7 +20,7 @@ let make = (_children) => {
   ...component,
   render: _self =>
     <div className=Styles.footer>
-      <a href={"http://marvel.com"}>(ReasonReact.string({j|Data provided by Marvel. \u00a9 $(year) Marvel|j}))</a>
+      <a href={"http://marvel.com"}>(ReasonReact.string({j|Data provided by Marvel. \u00a9 $year Marvel|j}))</a>
     </div>
 };
 

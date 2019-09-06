@@ -29,7 +29,7 @@ let make = (_children) => {
     },
   render: self => {
     let count = string_of_int(self.state.count);
-    let countMessage = {j|you have clicked the button $(count) times|j};
+    let countMessage = {j|you have clicked the button $count times|j};
 
     <div className=Styles.clickerCounterSection>
       {ReasonReact.string(countMessage)}

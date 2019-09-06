@@ -85,9 +85,9 @@ let make = (_children) => {
                 // image documentation here
                 // https://developer.marvel.com/documentation/images
                 <div className=Styles.characterItemRow key=(string_of_int(id))>
-                  <img src={{j|$(path)/standard_large.$(extension)|j}} alt={name} />
+                  <img src={{j|$(path)/standard_large.$extension|j}} alt={name} />
                   <div className=Styles.characterItemRowDetails>
-                    <h3>(str({j|Character Name: $(name)|j}))</h3>
+                    <h3>(str({j|Character Name: $name|j}))</h3>
                     <h4>(str("Character Description: "))(String.length(description) > 0 ? str(description) : str("N/A"))</h4>
                     (urls
                       |> List.map(url => {
