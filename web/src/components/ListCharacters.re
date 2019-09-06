@@ -116,12 +116,16 @@ let make = (_children) => {
                 :
                 ReasonReact.null
               )
-              <div>(str({j|$(count) of $(total)|j}))</div>
-              <button
-                className=Styles.nextButton
-                onClick={_event => self.send(LoadCharacters(offset + count))}>
-                (str("next"))
-              </button>
+              <div>(str({j|$count of $total|j}))</div>
+              (offset + count < total ?
+                <button
+                  className=Styles.nextButton
+                  onClick={_event => self.send(LoadCharacters(offset + count))}>
+                  (str("next"))
+                </button>
+                :
+                ReasonReact.null
+              )
             </div>
           </div>
         }
