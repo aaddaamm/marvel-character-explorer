@@ -1,7 +1,5 @@
 [@bs.module] external logo : string = "../assets/MarvelLogo.svg";
 
-let component = ReasonReact.statelessComponent("Header");
-
 module Styles = {
   open Css;
 
@@ -16,11 +14,12 @@ module Styles = {
     color(white),
     minHeight(px(100)),
     boxShadow(
-      ~x=px(0),
-      ~y=px(1),
-      ~blur=px(4),
-      ~spread=px(0),
-      rgba(0, 21, 41, 0.8)
+      Shadow.box(
+        ~x=px(0),
+        ~y=px(1),
+        ~blur=px(4),
+        ~spread=px(0),
+        rgba(0, 21, 41, 0.8))
     ),
   ]);
 
@@ -41,17 +40,16 @@ module Styles = {
   ]);
 };
 
-let make = (~message, _children) => {
-  ...component,
-  render: _self =>
-    <div className=Styles.header>
-      <Link href="/">
-        <img className=Styles.headerLogo src=logo/>
-      </Link>
-      <h2>(ReasonReact.string(message))</h2>
-      <div className=Styles.headerSearch>
-        <input type_="search" placeholder="Search this site" />
-        <button className=Styles.headerSearchButton>(ReasonReact.string("Search"))</button>
-      </div>
-    </div>,
+[@react.component]
+let make = (~message) => {
+  <div className=Styles.header>
+    <Link href="/">
+      <img className=Styles.headerLogo src=logo/>
+    </Link>
+    <h2>(ReasonReact.string(message))</h2>
+    <div className=Styles.headerSearch>
+      <input type_="search" placeholder="Search this site" />
+      <button className=Styles.headerSearchButton>(ReasonReact.string("Search"))</button>
+    </div>
+  </div>
 };

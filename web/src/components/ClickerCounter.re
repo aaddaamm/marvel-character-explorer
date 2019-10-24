@@ -1,11 +1,4 @@
-type state = {
-  count: int,
-};
-
-type action =
-  | Click;
-
-let clickerCounter = ReasonReact.reducerComponent("ClickerCounter");
+let str = ReasonReact.string
 
 module Styles = {
   open Css;
@@ -20,22 +13,14 @@ module Styles = {
   ]);
 };
 
-let make = (_children) => {
-  ...clickerCounter,
-  initialState: () => { count: 0 },
-  reducer: (action, state) =>
-    switch(action) {
-      | Click => ReasonReact.Update({ count: state.count + 1 })
-    },
-  render: self => {
-    let count = string_of_int(self.state.count);
-    let countMessage = {j|you have clicked the button $count times|j};
+[@react.component]
+let make = () => {
+  let (count, setCount) = React.useState(() => 0);
 
-    <div className=Styles.clickerCounterSection>
-      {ReasonReact.string(countMessage)}
-      <button className=Styles.button onClick={_event => self.send(Click)}>
-        {ReasonReact.string("button")}
-      </button>
-    </div>
-  },
+  <div className=Styles.clickerCounterSection>
+    {str({j|you have clicked the button $count times|j})}
+    <button className=Styles.button onClick={_event => setCount(_ => count + 1)}>
+      {str("button")}
+    </button>
+  </div>
 };

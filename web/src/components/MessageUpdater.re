@@ -1,13 +1,4 @@
-type state = {
-  pendingMessage: string,
-  textMessage: string,
-};
-
-type action =
-  | UpdatePendingMessage(string)
-  | UpdateMessage;
-
-let messageUpdater = ReasonReact.reducerComponent("MessageUpdater");
+let str = ReasonReact.string;
 
 module Styles = {
   open Css;
@@ -24,30 +15,21 @@ module Styles = {
   ]);
 };
 
-let make = (_children) => {
-  ...messageUpdater,
-  initialState: () => { pendingMessage: "", textMessage: "Hello" },
-  reducer: (action, state) =>
-    switch(action) {
-      | UpdatePendingMessage(text) => ReasonReact.Update({ ...state, pendingMessage: text})
-      | UpdateMessage => ReasonReact.Update({ textMessage: state.pendingMessage, pendingMessage: ""})
-    },
-  render: self => {
-    <div className=Styles.messageSection>
-      <div> {ReasonReact.string(self.state.textMessage)} </div>
-      <div>
-        <input
-          value={self.state.pendingMessage}
-          onChange={event =>
-            self.send(
-              UpdatePendingMessage(ReactEvent.Form.target(event)##value),
-            )
-          }
-        />
-        <button onClick={_event => self.send(UpdateMessage)}>
-          {ReasonReact.string("Update message")}
-        </button>
-      </div>
-    </div>;
-  },
+[@react.component]
+let make = () => {
+  let (message, updateMessage) = React.useState(() => "Hello There");
+  let (tempMessage, updateTempMessage) = React.useState(() => "");
+
+  <div className=Styles.messageSection>
+    <div> {str(message)} </div>
+    <div>
+      <input
+        value={tempMessage}
+        onChange={event => updateTempMessage(_ => ReactEvent.Form.target(event)##value)}
+      />
+      <button onClick={_event => updateMessage(_ => tempMessage)}>
+        {str("Update message")}
+      </button>
+    </div>
+  </div>
 };
