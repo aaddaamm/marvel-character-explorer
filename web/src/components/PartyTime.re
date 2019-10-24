@@ -1,9 +1,3 @@
-type state = { show: bool };
-
-type action = Toggle;
-
-let partyTime = ReasonReact.reducerComponent("PartyTime");
-
 module Styles = {
   open Css;
 
@@ -32,27 +26,22 @@ module Styles = {
   ]);
 };
 
-let make = (_children) => {
-  ...partyTime,
-  initialState: () => { show: false },
-  reducer: (action, state) =>
-    switch(action) {
-      | Toggle => ReasonReact.Update({ show: !state.show })
-    },
-  render: self => {
-    <div className=Styles.partySection>
-      <button className=Styles.button onClick={_event => self.send(Toggle)}>
-        (ReasonReact.string("party switch"))
-      </button>
-      (
-        self.state.show
-          ? (
-            <h1 className=Styles.partyTimeMessage>(ReasonReact.string("PARTY TIME!"))</h1>
-          ) : (
-            ReasonReact.null
-          )
-      )
-    </div>
-  },
+[@react.component]
+let make = () => {
+  let (visible, setVisibile) = React.useState(_ => true);
+
+  <div className=Styles.partySection>
+    <button className=Styles.button onClick={_event => setVisibile(_ => !visible)}>
+      (ReasonReact.string("party switch"))
+    </button>
+    (
+      visible
+        ? (
+          <h1 className=Styles.partyTimeMessage>(ReasonReact.string("PARTY TIME!"))</h1>
+        ) : (
+          ReasonReact.null
+        )
+    )
+  </div>
 };
 

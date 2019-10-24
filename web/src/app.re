@@ -2,9 +2,9 @@ type route =
   | Home
   | ClickerCounter
   | PartyTime
-  | MessageUpdater
-  | ListUsers
-  | ListCharacters;
+  | MessageUpdater;
+  // | ListUsers
+  // | ListCharacters;
 
 type state = {
   route: route,
@@ -81,8 +81,9 @@ let make = (~message, _children) => {
             | ClickerCounter => <ClickerCounter />
             | PartyTime => <PartyTime />
             | MessageUpdater => <MessageUpdater />
-            | ListUsers => <ListUsers />
-            | ListCharacters => <ListCharacters />
+            | NewRoute => <div />
+            // | ListUsers => <ListUsers />
+            // | ListCharacters => <ListCharacters />
           }
         )
       </div>

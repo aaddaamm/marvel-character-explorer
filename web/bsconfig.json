@@ -1,5 +1,6 @@
 {
-  "name": "reason-parcel",
+  "name": "marvel-character-explorer",
+  "bsc-flags": ["-bs-super-errors"],
   "sources": [
     {
       "dir": "src",
@@ -8,12 +9,14 @@
   ],
   "bs-dependencies": ["reason-react", "@glennsl/bs-jest", "@glennsl/bs-json", "bs-fetch", "bs-css"],
   "reason": {
-    "react-jsx": 2
+    "react-jsx": 3
   },
   "refmt": 3,
+  "ppx-flags": [],
   "package-specs": {
-    "module": "commonjs",
+    "module": "es6",
     "in-source": true
   },
-  "suffix": ".bs.js"
+  "suffix": ".bs.js",
+  "namespace": true
 }
