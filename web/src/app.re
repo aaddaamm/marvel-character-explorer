@@ -1,20 +1,3 @@
-type route =
-  | Home
-  | ClickerCounter
-  | PartyTime
-  | MessageUpdater;
-  // | ListUsers
-  // | ListCharacters;
-
-type state = {
-  route: route,
-};
-
-type action =
-  | ChangeRoute(route);
-
-let component = ReasonReact.reducerComponent("App");
-
 module Styles = {
   open Css;
 
@@ -38,56 +21,32 @@ module Styles = {
   ]);
 };
 
-let mapUrlToRoute = (url: ReasonReactRouter.url) =>
-  switch url.path {
-    | [] => Home
-    | ["clicker-counter"] => ClickerCounter
-    | ["party-time"] => PartyTime
-    | ["message-updater"] => MessageUpdater
-    | ["list-users"] => ListUsers
-    | ["list-characters"] => ListCharacters
-    | _ => Home
-  };
+[@react.component]
+let make = (~message) => {
+  let url = ReasonReactRouter.useUrl();
 
-let make = (~message, _children) => {
-  ...component,
-  initialState: () => { route: ClickerCounter },
-  didMount: (self) => {
-    let watcherID =
-      ReasonReactRouter.watchUrl(url =>
-        self.send(ChangeRoute(url |> mapUrlToRoute))
-      );
-
-    self.onUnmount(() => ReasonReactRouter.unwatchUrl(watcherID));
-  },
-  reducer: (action, _state) =>
-    switch action {
-      | ChangeRoute(route) => ReasonReact.Update({ route: route});
-  },
-  render: self => {
-    <div className=Styles.app>
-      <Header message=message />
-      <div className=Styles.navigation>
-        <Link href="/clicker-counter">(ReasonReact.string("Clicker Counter"))</Link>
-        <Link href="/party-time">(ReasonReact.string("Party Time"))</Link>
-        <Link href="/message-updater">(ReasonReact.string("Message Updater"))</Link>
-        <Link href="/list-users">(ReasonReact.string("List Users"))</Link>
-        <Link href="/list-characters">(ReasonReact.string("List Characters"))</Link>
-      </div>
-      <div className=Styles.appContent>
-        (
-          switch self.state.route {
-            | Home => <Home />
-            | ClickerCounter => <ClickerCounter />
-            | PartyTime => <PartyTime />
-            | MessageUpdater => <MessageUpdater />
-            | NewRoute => <div />
-            // | ListUsers => <ListUsers />
-            // | ListCharacters => <ListCharacters />
-          }
-        )
-      </div>
-      <Footer />
+  <div className=Styles.app>
+    <Header message=message />
+    <div className=Styles.navigation>
+      <Link href="/clicker-counter">(ReasonReact.string("Clicker Counter"))</Link>
+      <Link href="/party-time">(ReasonReact.string("Party Time"))</Link>
+      <Link href="/message-updater">(ReasonReact.string("Message Updater"))</Link>
+      // <Link href="/list-users">(ReasonReact.string("List Users"))</Link>
+      // <Link href="/list-characters">(ReasonReact.string("List Characters"))</Link>
     </div>
-  },
+    <div className=Styles.appContent>
+      (
+        switch url.path {
+          | [] => <Home />
+          | ["clicker-counter"] => <ClickerCounter />
+          | ["party-time"] => <PartyTime />
+          | ["message-updater"] => <MessageUpdater />
+          // | ListUsers => <ListUsers />
+          // | ListCharacters => <ListCharacters />
+          | _ => <Home />
+        }
+      )
+    </div>
+    <Footer />
+  </div>
 };
