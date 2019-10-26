@@ -1,4 +1,4 @@
-[@bs.val] external require: string => string = "";
+[@bs.val] external require: string => string = "require";
 let logo = require("../assets/MarvelLogo.svg");
 
 module Styles = {
