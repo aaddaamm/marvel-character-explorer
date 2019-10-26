@@ -20,7 +20,7 @@ let make = () => {
 
   <div className=Styles.messageSection>
     <div>message -> React.string</div>
-    <div>
+    <>
       <input
         value={tempMessage}
         onChange={event => updateTempMessage(event->ReactEvent.Form.target##value)}
@@ -28,6 +28,6 @@ let make = () => {
       <button onClick={_event => updateMessage(_ => tempMessage)}>
         "Update message" -> React.string
       </button>
-    </div>
+    </>
   </div>
 };
