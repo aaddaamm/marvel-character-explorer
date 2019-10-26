@@ -32,12 +32,12 @@ let make = () => {
 
   <div className=Styles.partySection>
     <button className=Styles.button onClick={_event => setVisibile(_ => !visible)}>
-      (ReasonReact.string("party switch"))
+      "party switch" -> React.string
     </button>
     (
       visible
         ? (
-          <h1 className=Styles.partyTimeMessage>(ReasonReact.string("PARTY TIME!"))</h1>
+          <h1 className=Styles.partyTimeMessage>"PARTY TIME!" -> React.string</h1>
         ) : (
           ReasonReact.null
         )

@@ -1,5 +1,3 @@
-let str = ReasonReact.string
-
 module Styles = {
   open Css;
 
@@ -18,9 +16,9 @@ let make = () => {
   let (count, setCount) = React.useState(() => 0);
 
   <div className=Styles.clickerCounterSection>
-    {str({j|you have clicked the button $count times|j})}
+    {j|you have clicked the button $count times|j} -> React.string
     <button className=Styles.button onClick={_event => setCount(_ => count + 1)}>
-      {str("button")}
+      "button" -> React.string
     </button>
   </div>
 };

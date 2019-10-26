@@ -8,6 +8,6 @@ let handleClick = (href, event) =>
 [@react.component]
 let make = (~href, ~children) => {
   <a href={href} onClick=handleClick(href)>
-    {children}
+    children
   </a>
 };

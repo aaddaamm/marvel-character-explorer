@@ -17,7 +17,7 @@ let year = Js.Date.getFullYear(date);
 [@react.component]
 let make = () => {
   <div className=Styles.footer>
-    <a href={"http://marvel.com"}>(ReasonReact.string({j|Data provided by Marvel. \u00a9 $year Marvel|j}))</a>
+    <a href={"http://marvel.com"}>{j|Data provided by Marvel. \u00a9 $year Marvel|j} -> React.string</a>
   </div>
 };
 
