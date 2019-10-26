@@ -1,5 +1,3 @@
-let str = ReasonReact.string;
-
 module Styles = {
   open Css;
 
@@ -21,14 +19,14 @@ let make = () => {
   let (tempMessage, updateTempMessage) = React.useState(() => "");
 
   <div className=Styles.messageSection>
-    <div> {str(message)} </div>
+    <div>message -> React.string</div>
     <div>
       <input
         value={tempMessage}
         onChange={event => updateTempMessage(ReactEvent.Form.target(event)##value)}
       />
       <button onClick={_event => updateMessage(_ => tempMessage)}>
-        {str("Update message")}
+        "Update message" -> React.string
       </button>
     </div>
   </div>

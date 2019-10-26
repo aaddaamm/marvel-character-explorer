@@ -28,11 +28,11 @@ let make = (~message) => {
   <div className=Styles.app>
     <Header message=message />
     <div className=Styles.navigation>
-      <Link href="/clicker-counter">(ReasonReact.string("Clicker Counter"))</Link>
-      <Link href="/party-time">(ReasonReact.string("Party Time"))</Link>
-      <Link href="/message-updater">(ReasonReact.string("Message Updater"))</Link>
-      // <Link href="/list-users">(ReasonReact.string("List Users"))</Link>
-      // <Link href="/list-characters">(ReasonReact.string("List Characters"))</Link>
+      <Link href="/clicker-counter">"Clicker Counter" -> React.string</Link>
+      <Link href="/party-time">"Party Time" -> React.string</Link>
+      <Link href="/message-updater">"Message Updater" -> React.string</Link>
+      // <Link href="/list-users">"List Users" -> React.string</Link>
+      // <Link href="/list-characters">"List Characters" -> React.string</Link>
     </div>
     <div className=Styles.appContent>
       (
@@ -41,8 +41,8 @@ let make = (~message) => {
           | ["clicker-counter"] => <ClickerCounter />
           | ["party-time"] => <PartyTime />
           | ["message-updater"] => <MessageUpdater />
-          // | ListUsers => <ListUsers />
-          // | ListCharacters => <ListCharacters />
+          // | ["list-users"] => <ListUsers />
+          // | ["list-characters"] => <ListCharacters />
           | _ => <Home />
         }
       )
