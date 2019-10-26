@@ -23,7 +23,7 @@ let make = () => {
     <div>
       <input
         value={tempMessage}
-        onChange={event => updateTempMessage(ReactEvent.Form.target(event)##value)}
+        onChange={event => updateTempMessage(event->ReactEvent.Form.target##value)}
       />
       <button onClick={_event => updateMessage(_ => tempMessage)}>
         "Update message" -> React.string
